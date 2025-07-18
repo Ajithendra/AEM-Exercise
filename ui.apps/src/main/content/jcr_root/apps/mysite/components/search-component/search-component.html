@@ -1,0 +1,208 @@
+<!--/*-->
+<div
+  class="search-component"
+  data-sly-use.model=" com.mysite.core.models.SearchComponent"
+>
+  <!-- Search Form -->
+  <form class="search-form" method="GET" action="${currentPage.path}.html">
+    <div class="form-group">
+      <label for="searchTerm" class="search-label">${model.inputLabel}</label>
+      <input
+        type="text"
+        id="searchTerm"
+        name="searchTerm"
+        value="${model.searchTerm}"
+        class="search-input"
+        placeholder="Enter search term..."
+      />
+    </div>
+    <button type="submit" class="search-button">
+      ${model.submitButtonText}
+    </button>
+  </form>
+
+  <!-- Search Results -->
+  <div class="search-results" data-sly-test="${model.hasResults}">
+    <h3>Search Results</h3>
+    <div class="results-grid">
+      <div class="result-item" data-sly-repeat.result="${model.searchResults}">
+        <div class="result-content">
+          <h4 class="result-title">${result.title}</h4>
+          <p class="result-description">${result.description}</p>
+          <div class="result-meta">
+            <span class="result-path">${result.pagePath}</span>
+            <span class="result-date" data-sly-test="${result.lastModified}">
+              Last modified: ${result.lastModified.time}
+            </span>
+          </div>
+          <div class="result-image" data-sly-test="${result.imagePath}">
+            <img
+              src="${result.imagePath}"
+              alt="${result.title}"
+              class="result-img"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Results Message -->
+  <div
+    class="no-results"
+    data-sly-test="${model.searchTerm && !model.hasResults}"
+  >
+    <p class="no-results-message">${model.noResultsMessage}</p>
+  </div>
+
+  <!-- CSS for responsive design -->
+  <style>
+    .search-component {
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    /* Desktop styles - light grey background, black text */
+    @media (min-width: 768px) {
+      .search-component {
+        background-color: #f5f5f5;
+        color: #000;
+      }
+    }
+
+    /* Mobile styles - black background, white text */
+    @media (max-width: 767px) {
+      .search-component {
+        background-color: #000;
+        color: #fff;
+      }
+    }
+
+    .search-form {
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .search-label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    .search-button {
+      background-color: #007cba;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .search-button:hover {
+      background-color: #005a87;
+    }
+
+    .search-results h3 {
+      margin-bottom: 20px;
+      border-bottom: 2px solid #007cba;
+      padding-bottom: 10px;
+    }
+
+    .results-grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    @media (min-width: 768px) {
+      .results-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+    }
+
+    .result-item {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .result-title {
+      margin: 0 0 10px 0;
+      color: #007cba;
+      font-size: 18px;
+    }
+
+    .result-description {
+      margin: 0 0 15px 0;
+      line-height: 1.5;
+    }
+
+    .result-meta {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .result-path {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .result-date {
+      display: block;
+    }
+
+    .result-image {
+      margin-top: 10px;
+    }
+
+    .result-img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .no-results-message {
+      font-size: 18px;
+      color: #666;
+      margin: 0;
+    }
+
+    /* Mobile specific adjustments */
+    @media (max-width: 767px) {
+      .search-component {
+        padding: 15px;
+        margin: 10px 0;
+      }
+
+      .result-item {
+        margin-bottom: 15px;
+      }
+
+      .search-input {
+        font-size: 16px; /* Prevents zoom on iOS */
+      }
+    }
+  </style>
+</div>
